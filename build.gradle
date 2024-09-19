@@ -1,0 +1,14 @@
+plugins {
+    alias(libs.plugins.compose.compiler) apply(false)
+    alias(libs.plugins.apollo.gradle) apply(false)
+    alias(libs.plugins.google.ksp) apply(false)
+    id("com.toptal.library.kotlin") apply(false)
+    id("com.toptal.library.android") apply(false)
+    id("com.toptal.app.android") apply(false)
+    id("dev.iurysouza.modulegraph") version "0.10.1"
+}
+
+moduleGraphConfig {
+    readmePath.set("./dependency-graph.md")
+    heading = "### Module Graph"
+}
