@@ -16,7 +16,7 @@ kotlin {
 
 dependencies {
     implementation(ProjectExtensionsKt.gradleKotlinDsl(project))
-    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin")
+    implementation(libs.kotlin.gradle)
     implementation(gradleApi())
     implementation(libs.android.gradle)
 }
