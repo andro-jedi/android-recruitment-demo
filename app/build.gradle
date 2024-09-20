@@ -8,6 +8,7 @@ android {
         namespace "com.toptal.github.browser"
         applicationId "com.toptal.browser"
         versionCode = 1
+        versionName "1.0"
 
         buildConfigField "String", "GITHUB_TOKEN", "\"${findGithubToken()}\""
         buildConfigField "String", "GITHUB_API", "\"https://api.github.com/graphql\""
