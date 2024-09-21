@@ -17,6 +17,8 @@ tasks.withType(KotlinCompile).configureEach {
 }
 
 dependencies {
+    implementation(project(":design"))
+
     implementation(platform(libs.compose.bom))
     androidTestImplementation(platform(libs.compose.bom))
     api(projects.presentation.api)
