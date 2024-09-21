@@ -10,11 +10,14 @@ import com.toptal.graphql.type.URI
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoSet
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 
 @Module
+@InstallIn(SingletonComponent::class)
 internal class ConnectionModule {
 
     @IntoSet

@@ -19,6 +19,7 @@ dependencies {
     implementation(libs.kotlin.gradle)
     implementation(gradleApi())
     implementation(libs.android.gradle)
+    implementation(libs.java.poet)
 }
 
 gradlePlugin {

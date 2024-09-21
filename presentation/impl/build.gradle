@@ -27,6 +27,9 @@ dependencies {
     implementation(libs.coroutines.android)
     implementation(libs.ui.tooling.preview)
 
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
 

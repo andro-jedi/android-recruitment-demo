@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.compose.compiler) apply(false)
     alias(libs.plugins.apollo.gradle) apply(false)
     alias(libs.plugins.google.ksp) apply(false)
+    alias(libs.plugins.hilt.android) apply(false)
     id("com.toptal.library.kotlin") apply(false)
     id("com.toptal.library.android") apply(false)
     id("com.toptal.app.android") apply(false)

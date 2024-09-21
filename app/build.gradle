@@ -1,5 +1,6 @@
 plugins {
     id("com.toptal.app.android")
+    alias(libs.plugins.hilt.android)
     alias(libs.plugins.google.ksp)
 }
 
@@ -36,11 +37,14 @@ android {
 dependencies {
     implementation(projects.data.networking.impl)
     implementation(projects.presentation.impl)
-    implementation(libs.dagger.core)
-    implementation(libs.dagger.android)
-    implementation(libs.dagger.android.support)
-    ksp(libs.dagger.compiler)
-    ksp(libs.dagger.compiler.android)
+
+    implementation(libs.hilt.android)
+    implementation(libs.hilt.navigation.compose)
+    ksp(libs.androidx.hilt.compiler)
+    ksp(libs.hilt.compiler)
+
+    testImplementation(libs.hilt.android.test)
+    kspTest(libs.hilt.compiler)
 }
 
 private String findGithubToken() {
