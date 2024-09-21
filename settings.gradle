@@ -12,6 +12,7 @@ include ':presentation:impl'
 include ':data:networking:api'
 include ':data:networking:impl'
 include ':design'
+include ':core:common'
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
