@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.core.view.WindowInsetsControllerCompat
+import com.toptal.design.ToptalTheme
 import com.toptal.github.presentation.listing.RepositoriesListRoot
 
 class MainActivity : ComponentActivity() {
@@ -15,7 +15,9 @@ class MainActivity : ComponentActivity() {
         WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightNavigationBars = true
 
         setContent {
-            RepositoriesListRoot()
+            ToptalTheme {
+                RepositoriesListRoot()
+            }
         }
     }
 }
