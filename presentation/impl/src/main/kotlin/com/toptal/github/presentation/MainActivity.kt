@@ -12,7 +12,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
-        WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightNavigationBars = true
 
         setContent {
             ToptalTheme {
