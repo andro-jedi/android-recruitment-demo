@@ -22,7 +22,6 @@ dependencies {
     implementation(projects.design)
     implementation(projects.core.common)
     implementation(projects.domain)
-    implementation(projects.data.repository)
 
     implementation(platform(libs.compose.bom))
     androidTestImplementation(platform(libs.compose.bom))

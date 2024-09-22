@@ -37,6 +37,8 @@ android {
 dependencies {
     implementation(projects.data.networking.impl)
     implementation(projects.presentation.impl)
+    implementation(projects.domain)
+    implementation(projects.data.repository)
 
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation.compose)

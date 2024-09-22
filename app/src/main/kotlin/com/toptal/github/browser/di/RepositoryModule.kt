@@ -1,6 +1,7 @@
-package com.toptal.repository
+package com.toptal.github.browser.di
 
 import com.toptal.domain.repository.GitRepository
+import com.toptal.repository.GitRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
