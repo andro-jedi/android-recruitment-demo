@@ -2,7 +2,7 @@ package com.toptal.mappers
 
 import com.toptal.data.networking.ApiRepositoryDetails
 import com.toptal.data.networking.ApiRepositoryIssue
-import com.toptal.data.networking.ApiRepositoryList
+import com.toptal.data.networking.ApiRepositoryItem
 import com.toptal.data.networking.ApiRepositoryPr
 import com.toptal.domain.entities.details.IssueState
 import com.toptal.domain.entities.details.PrState
@@ -11,7 +11,7 @@ import com.toptal.domain.entities.details.RepositoryIssue
 import com.toptal.domain.entities.details.RepositoryPr
 import com.toptal.domain.entities.list.RepositoryItem
 
-fun ApiRepositoryList.toDomain(): RepositoryItem {
+fun ApiRepositoryItem.toDomain(): RepositoryItem {
     return RepositoryItem(
         id = id,
         title = name,

@@ -31,10 +31,8 @@ internal class GraphqlGatewayIntegrationTest {
     fun `pulls repository details`() = runTest {
         server.enqueue(mockJson("details.json"))
         val result = api.getRepositoryDetails(
-            request = ApiRepositoryRequest(
-                owner = "toptal",
-                name = "gitignore",
-            ),
+            owner = "toptal",
+            name = "gitignore",
         )
 
         assertThat(result.id).isEqualTo("MDEwOlJlcG9zaXRvcnkxMDYyODk3")

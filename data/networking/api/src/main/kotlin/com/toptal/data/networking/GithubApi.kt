@@ -7,5 +7,5 @@ interface GithubApi {
         name: String,
     ): ApiRepositoryDetails
 
-    suspend fun getRepositories(user: String): List<ApiRepositoryDetails>
+    suspend fun getRepositories(user: String): List<ApiRepositoryItem>
 }
