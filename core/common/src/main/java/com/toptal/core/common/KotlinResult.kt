@@ -1,7 +1,10 @@
-package com.toptal.domain
+package com.toptal.core.common
 
 import kotlinx.coroutines.CancellationException
 
+/**
+ * Helper extension function for simplifying result handling
+ */
 inline fun <R> resultOf(block: () -> R): Result<R> {
     return try {
         Result.success(block())
