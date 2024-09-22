@@ -1,7 +1,7 @@
-package com.toptal.github.presentation.listing
+package com.toptal.github.presentation.repository.list
 
 data class UiRepositoryList(
-    val items: List<UiRepositoryItem>,
+    val items: List<UiRepositoryItem> = emptyList(),
 )
 
 sealed class UiRepositoryItem {

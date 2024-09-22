@@ -1,4 +1,4 @@
-package com.toptal.github.presentation.details
+package com.toptal.github.presentation.repository.details
 
 data class UiRepositoryDetails(
     val title: String,

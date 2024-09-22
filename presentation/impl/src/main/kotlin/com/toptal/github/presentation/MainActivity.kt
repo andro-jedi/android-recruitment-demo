@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.toptal.design.ToptalTheme
-import com.toptal.github.presentation.listing.RepositoriesListRoot
+import com.toptal.github.presentation.repository.list.RepositoriesListRoot
 
 class MainActivity : ComponentActivity() {
 

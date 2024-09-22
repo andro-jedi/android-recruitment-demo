@@ -1,4 +1,4 @@
-package com.toptal.github.presentation.listing
+package com.toptal.github.presentation.repository.list
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -24,6 +24,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.toptal.github.presentation.listing.UiRepositoryItem
+import com.toptal.github.presentation.listing.UiRepositoryList
 
 @Composable
 fun RepositoriesListRoot(

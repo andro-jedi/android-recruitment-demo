@@ -1,7 +1,9 @@
-package com.toptal.github.presentation.listing
+package com.toptal.github.presentation.repository.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.toptal.github.presentation.listing.UiRepositoryItem
+import com.toptal.github.presentation.listing.UiRepositoryList
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
