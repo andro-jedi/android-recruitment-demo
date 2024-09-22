@@ -2,39 +2,56 @@ package com.toptal.github.presentation.repository.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.toptal.github.presentation.listing.UiRepositoryItem
-import com.toptal.github.presentation.listing.UiRepositoryList
-import kotlinx.coroutines.delay
+import com.toptal.core.common.DispatchersProvider
+import com.toptal.domain.usecase.GetRepositoriesUsecase
+import com.toptal.github.presentation.repository.toUi
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class RepositoriesListViewModel : ViewModel() {
+@HiltViewModel
+class RepositoriesListViewModel @Inject constructor(
+    private val getRepositoriesUsecase: GetRepositoriesUsecase,
+    private val dispatcherProvider: DispatchersProvider,
+) : ViewModel() {
 
-    val list = MutableStateFlow<UiRepositoryList?>(value = null)
+    private val _uiState = MutableStateFlow(RepositoriesListContract.State())
+    val uiState = _uiState.asStateFlow()
+
+    private val _uiEffect = Channel<RepositoriesListContract.Effect>(Channel.BUFFERED)
+    val uiEffect: Flow<RepositoriesListContract.Effect> = _uiEffect.receiveAsFlow()
 
     init {
-        viewModelScope.launch {
-            list.update {
-                UiRepositoryList(
-                    items = List(1) {
-                        UiRepositoryItem.Progress
-                    },
-                )
-            }
-            delay(2000)
+        fetchRepositories()
+    }
 
-            list.update {
-                UiRepositoryList(
-                    items = List(40) {
-                        UiRepositoryItem.Repository(
-                            name = "toptal/gitignore $it",
-                            url = "https://github.com/toptal/gitignore $it",
-                            onClicked = { },
-                        )
-                    },
-                )
+    private fun fetchRepositories() {
+        viewModelScope.launch(dispatcherProvider.io) {
+            _uiState.update { it.copy(contentState = ContentState.Progress) }
+            getRepositoriesUsecase()
+                .onSuccess { items ->
+                    _uiState.update { it.copy(items = items.map { it.toUi() }, contentState = ContentState.Success) }
+                }
+                .onFailure { error ->
+                    _uiState.update { it.copy(contentState = ContentState.Error(error.message ?: it.toString())) }
+                }
+        }
+    }
+
+    fun onIntent(event: RepositoriesListContract.Event) {
+        when (event) {
+            is RepositoriesListContract.Event.ItemClicked -> {
+                viewModelScope.launch {
+                    _uiEffect.send(RepositoriesListContract.Effect.NavigateToDetails(event.name))
+                }
             }
+            RepositoriesListContract.Event.Retry -> fetchRepositories()
         }
     }
 }

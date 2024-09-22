@@ -8,5 +8,6 @@ data class RepositoryPr(
 
 enum class PrState {
     OPEN,
+    MERGED,
     CLOSED
 }
