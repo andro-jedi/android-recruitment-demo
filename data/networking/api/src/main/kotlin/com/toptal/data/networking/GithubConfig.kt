@@ -1,4 +1,4 @@
-package com.toptal.data.di
+package com.toptal.data.networking
 
 data class GithubConfig(
     val url: String,

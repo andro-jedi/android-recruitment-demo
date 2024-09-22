@@ -6,6 +6,7 @@ import com.apollographql.apollo.cache.normalized.normalizedCache
 import com.apollographql.apollo.network.okHttpClient
 import com.toptal.data.AuthInterceptor
 import com.toptal.data.adapters.UriToStringAdapter
+import com.toptal.data.networking.GithubConfig
 import com.toptal.graphql.type.URI
 import dagger.Module
 import dagger.Provides

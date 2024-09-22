@@ -1,6 +1,6 @@
 package com.toptal.github.browser.di
 
-import com.toptal.data.di.GithubConfig
+import com.toptal.data.networking.GithubConfig
 import com.toptal.github.browser.BuildConfig
 import dagger.Module
 import dagger.Provides

@@ -1,6 +1,6 @@
 package com.toptal.data
 
-import com.toptal.data.di.GithubConfig
+import com.toptal.data.networking.GithubConfig
 import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject
