@@ -1,4 +1,4 @@
-package com.toptal.domain
+package com.toptal.core.common
 
 import kotlinx.coroutines.CoroutineDispatcher
 
