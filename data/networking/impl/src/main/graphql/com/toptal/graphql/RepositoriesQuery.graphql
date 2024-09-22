@@ -1,7 +1,15 @@
-query RepositoryDetails($owner: String!, $name:String!) {
-    repository(owner:$owner, name:$name) {
-        id
-        name
-        url
+query RepositoryDetails($owner: String!) {
+    repositoryOwner(login: $owner) {
+        repositories(
+            first: 100
+            orderBy: { field: NAME, direction: ASC }
+        ) {
+            nodes {
+                id
+                name
+                url
+                description
+            }
+        }
     }
 }

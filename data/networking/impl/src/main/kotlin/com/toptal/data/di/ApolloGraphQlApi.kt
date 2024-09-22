@@ -1,16 +1,15 @@
 package com.toptal.data.di
 
 import com.apollographql.apollo.ApolloClient
-import com.toptal.data.networking.Api
+import com.toptal.data.networking.GithubApi
 import com.toptal.data.networking.ApiRepositoryDetails
-import com.toptal.data.networking.ApiRepositoryRequest
 import com.toptal.graphql.RepositoryDetailsQuery
 import kotlinx.coroutines.flow.toList
 import javax.inject.Inject
 
 internal class ApolloGraphQlApi @Inject constructor(
     private val client: ApolloClient,
-) : Api {
+) : GithubApi {
 
     override suspend fun getRepositoryDetails(request: ApiRepositoryRequest): ApiRepositoryDetails {
         val response = client.query(

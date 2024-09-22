@@ -3,8 +3,7 @@ package com.toptal.data
 import com.toptal.data.di.DaggerNetworkingComponent
 import com.toptal.data.di.GithubConfig
 import com.toptal.data.di.NetworkingComponent
-import com.toptal.data.networking.Api
-import com.toptal.data.networking.ApiRepositoryRequest
+import com.toptal.data.networking.GithubApi
 import kotlinx.coroutines.test.runTest
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
@@ -15,7 +14,7 @@ import java.io.File
 
 internal class GraphqlGatewayIntegrationTest {
 
-    private lateinit var api: Api
+    private lateinit var api: GithubApi
 
     private val server = MockWebServer()
 

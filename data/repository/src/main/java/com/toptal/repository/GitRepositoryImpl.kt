@@ -1,7 +1,6 @@
 package com.toptal.repository
 
-import com.toptal.data.networking.Api
-import com.toptal.data.networking.ApiRepositoryRequest
+import com.toptal.data.networking.GithubApi
 import com.toptal.domain.entities.details.RepositoryDetails
 import com.toptal.domain.entities.list.RepositoryItem
 import com.toptal.domain.repository.GitRepository
@@ -9,7 +8,7 @@ import com.toptal.core.common.resultOf
 import javax.inject.Inject
 
 class GitRepositoryImpl @Inject constructor(
-    private val api: Api,
+    private val api: GithubApi,
 ) : GitRepository {
 
     override suspend fun getRepositories(user: String): Result<List<RepositoryItem>> {

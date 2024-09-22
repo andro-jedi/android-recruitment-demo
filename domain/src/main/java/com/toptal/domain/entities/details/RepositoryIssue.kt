@@ -1,11 +1,12 @@
 package com.toptal.domain.entities.details
 
 data class RepositoryIssue(
+    val id: String,
     val title: String,
-    val status: IssueStatus
+    val state: IssueState
 )
 
-enum class IssueStatus {
+enum class IssueState {
     OPEN,
     CLOSED
 }
