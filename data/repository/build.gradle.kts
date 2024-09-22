@@ -5,6 +5,7 @@ plugins {
 
 dependencies {
     implementation(projects.data.networking.api)
+    implementation(projects.data.mappers)
     implementation(projects.domain)
     implementation(projects.core.common)
 
