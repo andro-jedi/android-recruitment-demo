@@ -11,7 +11,7 @@ class GetRepositoriesUsecase @Inject constructor(
     private val gitRepository: GitRepository
 ) {
 
-    suspend operator fun invoke(): Result<List<RepositoryItem>> {
-        return gitRepository.getRepositories("toptal")
+    suspend operator fun invoke(user: String = "toptal"): Result<List<RepositoryItem>> {
+        return gitRepository.getRepositories(user)
     }
 }
