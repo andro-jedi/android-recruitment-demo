@@ -1,4 +1,4 @@
-query RepositoryDetails($owner: String!) {
+query RepositoriesList($owner: String!) {
     repositoryOwner(login: $owner) {
         repositories(
             first: 100
