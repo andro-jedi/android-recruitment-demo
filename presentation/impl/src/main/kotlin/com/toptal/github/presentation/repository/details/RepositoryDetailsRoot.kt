@@ -3,88 +3,233 @@ package com.toptal.github.presentation.repository.details
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.toptal.github.presentation.details.UiRepositoryDetails
-import com.toptal.github.presentation.details.UiRepositoryDetails.Content
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
+import com.toptal.design.ToptalTheme
 
 @Composable
 fun RepositoryDetailsRoot(
+    navController: NavController,
     modifier: Modifier = Modifier,
-    viewModel: RepositoryDetailsViewModel = viewModel(),
+    viewModel: RepositoryDetailsViewModel = hiltViewModel(),
 ) {
-    val model by viewModel.state.collectAsState()
+    val state by viewModel.uiState.collectAsStateWithLifecycle()
+
+    // Use LaunchedEffect to collect the one-time events
+    LaunchedEffect(viewModel) {
+        viewModel.uiEffect.collect { effect ->
+            when (effect) {
+                RepositoryDetailsContract.Effect.NavigateBack -> navController.navigateUp()
+            }
+        }
+    }
 
     RepositoryDetailsRoot(
-        model = model,
         modifier = modifier,
+        state = state,
+        onBackClicked = {
+            navController.navigateUp()
+        },
+        onRetryClicked = {
+            viewModel.onIntent(RepositoryDetailsContract.Event.Retry)
+        },
     )
 }
 
 @Composable
 private fun RepositoryDetailsRoot(
-    model: UiRepositoryDetails?,
+    state: RepositoryDetailsContract.State,
     modifier: Modifier = Modifier,
+    onBackClicked: () -> Unit,
+    onRetryClicked: () -> Unit,
 ) {
-    model ?: return
+    val details = state.repositoryDetails
     Scaffold(
         modifier = modifier,
         topBar = {
             TopAppBar(
-                title = { Text(text = model.title) },
+                title = { Text(text = details.title) },
+                navigationIcon = {
+                    IconButton(onClick = onBackClicked) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = "Back",
+                        )
+                    }
+                },
             )
         },
         contentWindowInsets = WindowInsets.systemBars,
     ) { innerPadding ->
         val contentModifier = Modifier
-            .consumeWindowInsets(innerPadding)
             .padding(innerPadding)
 
-        when (val content = model.content) {
-            is Content.FullScreenError -> FullScreenError(modifier = contentModifier, model = content)
-            is Content.Loaded -> Content(modifier = contentModifier, model = content)
+        when (state.contentState) {
+            is ContentState.Error -> Error(
+                model = state.contentState as ContentState.Error,
+                modifier = contentModifier,
+                onRetryClicked = onRetryClicked,
+            )
+
+            ContentState.Progress -> Progress()
+            ContentState.Success -> {
+                Content(
+                    details = details,
+                    modifier = contentModifier,
+                )
+            }
         }
     }
 }
 
 @Composable
 private fun Content(
-    model: Content.Loaded,
+    details: UiRepositoryDetails,
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier
-            .verticalScroll(rememberScrollState())
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+        modifier = modifier.padding(16.dp),
     ) {
-        Text("url of the repository=${model.url}")
-        Text("counts of open issues, closed issues, open PRs and closed PRs:")
-        Text("titles of the open issues and PRs=")
+        SectionHeader(details)
+
+        Spacer(Modifier.height(16.dp))
+        
+        val scrollState = rememberScrollState()
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(scrollState),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            OpenIssuesSection(
+                openIssues = details.openIssues,
+                openIssuesCount = details.openIssuesCount,
+                modifier = Modifier.padding(vertical = 8.dp),
+            )
+            OpenPullRequestsSection(
+                openPullRequests = details.openPullRequests,
+                openPullRequestsCount = details.openPullRequestsCount,
+                modifier = Modifier.padding(vertical = 8.dp),
+            )
+        }
     }
 }
 
 @Composable
-private fun FullScreenError(
-    model: Content.FullScreenError,
+private fun OpenPullRequestsSection(
+    openPullRequests: List<UiPullRequest>,
+    openPullRequestsCount: Int,
     modifier: Modifier = Modifier,
+) {
+    Text(
+        text = "Open Pull Requests ($openPullRequestsCount):",
+        style = MaterialTheme.typography.titleMedium,
+        modifier = modifier,
+    )
+
+    if (openPullRequests.isNotEmpty()) {
+        openPullRequests.forEach { pr ->
+            Text(
+                text = "• ${pr.title}",
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier.padding(vertical = 4.dp),
+            )
+        }
+    } else {
+        Text(
+            text = "No open pull requests",
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.padding(vertical = 4.dp),
+        )
+    }
+}
+
+@Composable
+private fun OpenIssuesSection(
+    openIssues: List<UiIssue>,
+    openIssuesCount: Int,
+    modifier: Modifier = Modifier,
+) {
+    Text(
+        text = "Open Issues ($openIssuesCount):",
+        style = MaterialTheme.typography.titleMedium,
+        modifier = modifier,
+    )
+
+    if (openIssues.isNotEmpty()) {
+        openIssues.forEach { issue ->
+            Text(
+                text = "• ${issue.title}",
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier.padding(vertical = 4.dp),
+            )
+        }
+    } else {
+        Text(
+            text = "No open issues",
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.padding(vertical = 4.dp),
+        )
+    }
+}
+
+@Composable
+private fun SectionHeader(details: UiRepositoryDetails, modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        with(details) {
+            Text(
+                text = "Url: $url",
+                style = MaterialTheme.typography.titleMedium,
+            )
+
+            Text(
+                text = "Issues: Open: $openIssuesCount, Closed: $closedIssuesCount",
+                style = MaterialTheme.typography.bodyMedium,
+            )
+
+            Text(
+                text = "Pull Requests: Open: $openPullRequestsCount, Closed: $closedPullRequestsCount",
+                style = MaterialTheme.typography.bodyMedium,
+            )
+        }
+    }
+}
+
+@Composable
+private fun Error(
+    model: ContentState.Error,
+    modifier: Modifier = Modifier,
+    onRetryClicked: () -> Unit,
 ) {
     Box(
         modifier = modifier.fillMaxSize(),
@@ -95,35 +240,54 @@ private fun FullScreenError(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            Text(text = "Something went wrong…")
+            Text(text = model.message)
 
-            Button(onClick = model.onRetryClicked) {
+            Button(onClick = onRetryClicked) {
                 Text(text = "Retry")
             }
         }
     }
 }
 
+@Composable
+private fun Progress(modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(8.dp),
+        contentAlignment = Alignment.Center,
+    ) {
+        CircularProgressIndicator()
+    }
+}
+
 @Preview
 @Composable
 private fun RepositoryDetailsErrorPreview() {
-    RepositoryDetailsRoot(
-        model = UiRepositoryDetails(
-            title = "Fixture Repository Name",
-            content = Content.FullScreenError(onRetryClicked = { }),
-        ),
-    )
+    ToptalTheme {
+        RepositoryDetailsRoot(
+            state = RepositoryDetailsContract.State(
+                UiRepositoryDetails.EMPTY.copy(title = "Fixture Repository Name"),
+                contentState = ContentState.Error(message = "Fixture error message"),
+            ),
+            onBackClicked = { },
+            onRetryClicked = { },
+        )
+    }
 }
 
 @Preview
 @Composable
 private fun RepositoryDetailsPreview() {
-    RepositoryDetailsRoot(
-        model = UiRepositoryDetails(
-            title = "Fixture Repository Name",
-            content = Content.Loaded(
-                url = "https://www.example.com",
+    ToptalTheme {
+        RepositoryDetailsRoot(
+            state = RepositoryDetailsContract.State(
+                UiRepositoryDetails.EMPTY.copy(title = "Fixture Repository Name", url = "https://www.example.com"),
+                contentState = ContentState.Success,
             ),
-        ),
-    )
+            onBackClicked = { },
+            onRetryClicked = { },
+        )
+    }
 }
+

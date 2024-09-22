@@ -1,9 +1,11 @@
 package com.toptal.github.presentation.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.toptal.github.presentation.repository.details.RepositoryDetailsRoot
 import com.toptal.github.presentation.repository.list.RepositoriesListRoot
 import kotlinx.serialization.Serializable
@@ -16,7 +18,7 @@ fun AppNavigation() {
             RepositoriesListRoot(navController)
         }
         composable<Navigation.RepositoryDetails> {
-            RepositoryDetailsRoot()
+            RepositoryDetailsRoot(navController)
         }
     }
 }
@@ -27,5 +29,11 @@ object Navigation {
     object RepositoriesList
 
     @Serializable
-    data class RepositoryDetails(val id: String)
+    data class RepositoryDetails(val name: String, val owner: String = "toptal") {
+
+        companion object {
+
+            fun from(savedStateHandle: SavedStateHandle) = savedStateHandle.toRoute<RepositoryDetails>()
+        }
+    }
 }
