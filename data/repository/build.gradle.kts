@@ -4,6 +4,10 @@ plugins {
 }
 
 dependencies {
+    implementation(projects.data.networking.api)
+    implementation(projects.domain)
+    implementation(projects.core.common)
+
     implementation(libs.coroutines.core)
 
     implementation(libs.hilt.core)

@@ -3,6 +3,8 @@ package com.toptal.data.networking
 interface Api {
 
     suspend fun getRepositoryDetails(request: ApiRepositoryRequest): ApiRepositoryDetails
+
+    suspend fun getRepositories(user: String): List<ApiRepositoryDetails>
 }
 
 data class ApiRepositoryDetails(

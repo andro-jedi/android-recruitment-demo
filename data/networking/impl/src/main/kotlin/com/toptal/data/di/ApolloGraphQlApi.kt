@@ -34,4 +34,8 @@ internal class ApolloGraphQlApi @Inject constructor(
             )
         }
     }
+
+    override suspend fun getRepositories(user: String): List<ApiRepositoryDetails> {
+        TODO("Not yet implemented")
+    }
 }
