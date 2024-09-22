@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.toptal.github.presentation.listing.UiRepositoryItem
@@ -30,7 +31,7 @@ import com.toptal.github.presentation.listing.UiRepositoryList
 @Composable
 fun RepositoriesListRoot(
     modifier: Modifier = Modifier,
-    viewModel: RepositoriesListViewModel = viewModel(),
+    viewModel: RepositoriesListViewModel = hiltViewModel(),
 ) {
     val state by viewModel.list.collectAsStateWithLifecycle()
 
