@@ -5,16 +5,6 @@ pluginManagement {
     }
 }
 
-rootProject.name = "android-recruitment"
-include ':app'
-include ':domain'
-include ':presentation:api'
-include ':presentation:impl'
-include ':data:networking:api'
-include ':data:networking:impl'
-include ':design'
-include ':core:common'
-
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 dependencyResolutionManagement {
@@ -25,3 +15,14 @@ dependencyResolutionManagement {
     }
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
 }
+
+rootProject.name = "android-recruitment"
+include ':app'
+include ':domain'
+include ':presentation:api'
+include ':presentation:impl'
+include ':data:networking:api'
+include ':data:networking:impl'
+include ':data:repository'
+include ':design'
+include ':core:common'
