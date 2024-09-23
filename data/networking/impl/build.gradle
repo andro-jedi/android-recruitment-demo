@@ -12,7 +12,7 @@ apollo {
 
 dependencies {
     api(projects.data.networking.api)
-    api(libs.coroutines.core)
+    implementation(libs.coroutines.core)
     implementation(libs.bundles.apollo)
     implementation(libs.okhttp.okhttp)
 

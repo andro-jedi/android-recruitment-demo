@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-  implementation(projects.domain)
+  api(projects.domain)
+  implementation(libs.compose.runtime)
   implementation(platform(libs.compose.bom))
-  api(libs.compose.runtime)
 }

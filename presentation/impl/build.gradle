@@ -21,14 +21,13 @@ tasks.withType(KotlinCompile).configureEach {
 dependencies {
     implementation(projects.design)
     implementation(projects.core.common)
-    implementation(projects.domain)
+    api(projects.presentation.api)
 
     implementation(platform(libs.compose.bom))
     androidTestImplementation(platform(libs.compose.bom))
-    api(projects.presentation.api)
     implementation(libs.material3)
     implementation(libs.activity.compose)
-    api(libs.lifecycle.viewmodel.compose)
+    implementation(libs.lifecycle.viewmodel.compose)
     implementation(libs.lifecycle.runtime.compose)
     implementation(libs.coroutines.android)
     implementation(libs.ui.tooling.preview)
