@@ -1,0 +1,39 @@
+{
+  "data": {
+    "repository": {
+      "id": "MDEwOlJlcG9zaXRvcnkxMDYyODk3",
+      "name": "gitignore",
+      "url": "https://github.com/toptal/gitignore",
+      "issues": {
+        "nodes": [
+          {
+            "id": "MDEwOlJlcG9zaXRvcnkxMDYyODk32=",
+            "title": "Finally it is working!",
+            "state": "CLOSED"
+          },
+          {
+            "id": "MDEwOlJlcG9zaXRvcnkxMDYyODk33==",
+            "title": "Hi there",
+            "state": "CLOSED"
+          }
+        ],
+        "totalCount": 2
+      },
+      "pullRequests": {
+        "nodes": [
+          {
+            "id": "MDEwOlJlcG9zaXRvcnkxMDYyODk34=",
+            "title": "Update .gitignore",
+            "state": "OPEN"
+          },
+          {
+            "id": "MDEwOlJlcG9zaXRvcnkxMDYyODk35",
+            "title": "Move to androidTest directory",
+            "state": "OPEN"
+          }
+        ],
+        "totalCount": 2
+      }
+    }
+  }
+}

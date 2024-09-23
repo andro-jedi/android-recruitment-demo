@@ -1,5 +1,5 @@
 plugins {
-    id("com.toptal.library.kotlin")
+    id("com.toptal.library.android")
     alias(libs.plugins.google.ksp)
 }
 

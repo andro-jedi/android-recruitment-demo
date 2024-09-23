@@ -1,5 +1,5 @@
 plugins {
-    id("com.toptal.library.kotlin")
+    id("com.toptal.library.android")
     alias(libs.plugins.apollo.gradle)
     alias(libs.plugins.google.ksp)
 }
@@ -7,6 +7,12 @@ plugins {
 apollo {
     service("service") {
         packageName.set("com.toptal.graphql")
+    }
+}
+
+android {
+    defaultConfig {
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 }
 
@@ -19,8 +25,13 @@ dependencies {
     implementation(libs.hilt.core)
     ksp(libs.hilt.compiler)
 
-    testImplementation(libs.okhttp.mockwebserver)
-    testImplementation(libs.coroutines.test)
-    testImplementation(libs.junit4.core)
-    testImplementation(libs.assertj.core)
+    androidTestImplementation(libs.hilt.android.test)
+    kspAndroidTest(libs.hilt.compiler)
+
+    androidTestImplementation(libs.espresso.core)
+    androidTestImplementation(libs.androidx.tests)
+    androidTestImplementation(libs.okhttp.mockwebserver)
+    androidTestImplementation(libs.coroutines.test)
+    androidTestImplementation(libs.junit4.core)
+    androidTestImplementation(libs.assertj.core)
 }
