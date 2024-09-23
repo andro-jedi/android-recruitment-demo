@@ -3,9 +3,7 @@ plugins {
 }
 
 dependencies {
-    api(projects.core.common)
-    api(libs.junit4.core)
-    api(libs.coroutines.core)
-    api(libs.coroutines.test)
-    api(libs.tests.mockk)
+    implementation(projects.core.common)
+    implementation(libs.junit4.core)
+    implementation(libs.coroutines.test)
 }
