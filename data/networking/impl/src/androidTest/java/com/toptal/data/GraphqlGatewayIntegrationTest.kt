@@ -46,6 +46,15 @@ internal class GraphqlGatewayIntegrationTest {
         assertThat(result.name).isEqualTo(repoName)
     }
 
+    @Test
+    fun pulls_repositories_list() = runTest {
+        server.enqueue(mockJson("list.json"))
+        val result = api.getRepositories(user = "toptal")
+
+        assertThat(result.size).isEqualTo(3)
+        assertThat(result.first().id).isEqualTo("MDEwOlJlcG9zaXRvcnkxMDYyODk31")
+    }
+
     private fun mockJson(fileName: String): MockResponse {
         val inputStream = javaClass.classLoader?.getResourceAsStream(fileName)
             ?: throw FileNotFoundException("Resource not found: $fileName")

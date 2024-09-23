@@ -1,0 +1,28 @@
+{
+  "data": {
+    "repositoryOwner": {
+      "repositories": {
+        "nodes": [
+          {
+            "id": "MDEwOlJlcG9zaXRvcnkxMDYyODk31",
+            "name": "android-architecture",
+            "url": "https://github.com/toptal/0",
+            "description": "description1"
+          },
+          {
+            "id": "MDEwOlJlcG9zaXRvcnkxMDYyODk32",
+            "name": "gitignore",
+            "url": "https://github.com/toptal/1",
+            "description": "description2"
+          },
+          {
+            "id": "MDEwOlJlcG9zaXRvcnkxMDYyODk33",
+            "name": "My git",
+            "url": "https://github.com/toptal/2",
+            "description": "description3"
+          }
+        ]
+      }
+    }
+  }
+}
