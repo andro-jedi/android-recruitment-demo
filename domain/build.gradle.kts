@@ -6,10 +6,10 @@ plugins {
 dependencies {
     implementation(libs.coroutines.core)
 
-    implementation(libs.junit4.core)
-    implementation(libs.coroutines.core)
-    implementation(libs.coroutines.test)
-    implementation(libs.tests.mockk)
+    testImplementation(libs.junit4.core)
+    testImplementation(libs.coroutines.core)
+    testImplementation(libs.coroutines.test)
+    testImplementation(libs.tests.mockk)
 
     implementation(libs.hilt.core)
     ksp(libs.hilt.compiler)
