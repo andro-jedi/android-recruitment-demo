@@ -2,7 +2,6 @@ package com.toptal.domain.usecase
 
 import com.toptal.domain.entities.list.RepositoryItem
 import com.toptal.domain.repository.GitRepository
-import com.toptal.test.CoroutineTest
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -12,7 +11,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 
-class GetRepositoriesUsecaseTest : CoroutineTest() {
+class GetRepositoriesUsecaseTest {
 
     private val gitRepository: GitRepository = mockk()
 
