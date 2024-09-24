@@ -1,6 +1,8 @@
 package com.toptal.data
 
 import com.apollographql.apollo.ApolloClient
+import com.apollographql.apollo.api.ApolloResponse
+import com.apollographql.apollo.exception.ApolloNetworkException
 import com.toptal.data.networking.ApiRepositoryDetails
 import com.toptal.data.networking.ApiRepositoryIssue
 import com.toptal.data.networking.ApiRepositoryItem
@@ -11,6 +13,7 @@ import com.toptal.data.networking.PullRequests
 import com.toptal.graphql.RepositoriesListQuery
 import com.toptal.graphql.RepositoryDetailsQuery
 import kotlinx.coroutines.flow.toList
+import okio.IOException
 import javax.inject.Inject
 
 internal class ApolloGraphQlApi @Inject constructor(
@@ -27,7 +30,7 @@ internal class ApolloGraphQlApi @Inject constructor(
 
         val data = response.data?.repository
         return if (data == null) {
-            throw IllegalStateException("Missing exception handling", response.exception)
+            rethrowException(response)
         } else {
             ApiRepositoryDetails(
                 id = data.id,
@@ -59,7 +62,7 @@ internal class ApolloGraphQlApi @Inject constructor(
 
         val data = response.data?.repositoryOwner?.repositories
         return if (data == null) {
-            throw IllegalStateException("Missing exception handling", response.exception)
+            rethrowException(response)
         } else {
             data.nodes?.mapNotNull {
                 it?.let {
@@ -71,6 +74,16 @@ internal class ApolloGraphQlApi @Inject constructor(
                     )
                 }
             } ?: emptyList()
+        }
+    }
+
+    /**
+     * Hide exceptions from apollo and rethrow some generic ones
+     */
+    private fun rethrowException(response: ApolloResponse<*>): Nothing {
+        when (response.exception) {
+            is ApolloNetworkException -> throw IOException()
+            else -> throw IllegalStateException("Missing exception handling")
         }
     }
 }

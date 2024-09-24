@@ -1,6 +1,8 @@
 package com.toptal.domain.usecase
 
 import com.toptal.domain.entities.list.RepositoryItem
+import com.toptal.domain.exception.DataError
+import com.toptal.domain.helper.Result
 import com.toptal.domain.repository.GitRepository
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -30,7 +32,7 @@ class GetRepositoriesUsecaseTest {
             RepositoryItem(id = "1", title = "repo1", url = "https://github.com/toptal/repo1"),
             RepositoryItem(id = "2", title = "repo2", url = "https://github.com/toptal/repo2"),
         )
-        coEvery { gitRepository.getRepositories(user) } returns Result.success(repositories)
+        coEvery { gitRepository.getRepositories(user) } returns Result.Success(repositories)
 
         // Act
         val result = getRepositoriesUsecase(user)
@@ -45,8 +47,8 @@ class GetRepositoriesUsecaseTest {
     fun `invoke should return error on failure`() = runTest {
         // Arrange
         val user = "toptal"
-        val error = Exception("Error fetching repositories")
-        coEvery { gitRepository.getRepositories(user) } returns Result.failure(error)
+        val error = DataError.Network.NOT_FOUND
+        coEvery { gitRepository.getRepositories(user) } returns Result.Failure(error)
 
         // Act
         val result = getRepositoriesUsecase(user)

@@ -1,5 +1,7 @@
 package com.toptal.github.presentation.repository.details
 
+import com.toptal.domain.exception.DomainError
+
 class RepositoryDetailsContract {
     data class State(
         val repositoryDetails: UiRepositoryDetails,
@@ -42,5 +44,5 @@ sealed class ContentState {
 
     data object Success : ContentState()
 
-    data class Error(val message: String) : ContentState()
+    data class Error(val cause: DomainError) : ContentState()
 }

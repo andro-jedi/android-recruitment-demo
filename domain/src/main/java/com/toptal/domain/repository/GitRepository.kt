@@ -2,6 +2,7 @@ package com.toptal.domain.repository
 
 import com.toptal.domain.entities.details.RepositoryDetails
 import com.toptal.domain.entities.list.RepositoryItem
+import com.toptal.domain.helper.Result
 
 /**
  * Interface for Git repository

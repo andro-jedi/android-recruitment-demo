@@ -39,7 +39,7 @@ class RepositoriesListViewModel @Inject constructor(
                     _uiState.update { it.copy(items = items.map { it.toUi() }, contentState = ContentState.Success) }
                 }
                 .onFailure { error ->
-                    _uiState.update { it.copy(contentState = ContentState.Error(error.message ?: it.toString())) }
+                    _uiState.update { it.copy(contentState = ContentState.Error(error)) }
                 }
         }
     }

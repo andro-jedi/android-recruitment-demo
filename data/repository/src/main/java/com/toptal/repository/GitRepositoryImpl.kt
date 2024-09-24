@@ -5,6 +5,7 @@ import com.toptal.domain.entities.details.RepositoryDetails
 import com.toptal.domain.entities.list.RepositoryItem
 import com.toptal.domain.repository.GitRepository
 import com.toptal.core.common.resultOf
+import com.toptal.domain.helper.Result
 import com.toptal.mappers.toDomain
 import javax.inject.Inject
 

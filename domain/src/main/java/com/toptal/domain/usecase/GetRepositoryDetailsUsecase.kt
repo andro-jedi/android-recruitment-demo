@@ -1,7 +1,7 @@
 package com.toptal.domain.usecase
 
 import com.toptal.domain.entities.details.RepositoryDetails
-import com.toptal.domain.entities.list.RepositoryItem
+import com.toptal.domain.helper.Result
 import com.toptal.domain.repository.GitRepository
 import javax.inject.Inject
 

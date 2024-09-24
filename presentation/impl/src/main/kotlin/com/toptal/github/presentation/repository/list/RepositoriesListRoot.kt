@@ -29,6 +29,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.toptal.design.ToptalTheme
+import com.toptal.domain.exception.DataError
+import com.toptal.domain.exception.DomainError
 import com.toptal.github.presentation.navigation.Navigation
 
 @Composable
@@ -139,11 +141,18 @@ private fun Error(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
-        Text(text = "Something went wrong…\n${model.message}")
+        Text(text = model.cause.asText())
 
         Button(onClick = onRetryClicked) {
             Text(text = "Retry")
         }
+    }
+}
+
+private fun DomainError.asText(): String {
+    return when (this) {
+        DataError.Network.NO_INTERNET -> "No Internet connection"
+        else -> "Unknown error!"
     }
 }
 

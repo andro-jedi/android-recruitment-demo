@@ -1,5 +1,7 @@
 package com.toptal.github.presentation.repository.list
 
+import com.toptal.domain.exception.DomainError
+
 class RepositoriesListContract {
     data class State(
         val contentState: ContentState = ContentState.Progress,
@@ -29,5 +31,5 @@ sealed class ContentState {
 
     data object Success : ContentState()
 
-    data class Error(val message: String) : ContentState()
+    data class Error(val cause: DomainError) : ContentState()
 }

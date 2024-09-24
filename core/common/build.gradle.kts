@@ -5,6 +5,8 @@ plugins {
 
 dependencies {
     implementation(libs.coroutines.core)
+    implementation(projects.data.mappers)
+    implementation(projects.domain)
 
     implementation(libs.hilt.core)
     ksp(libs.hilt.compiler)

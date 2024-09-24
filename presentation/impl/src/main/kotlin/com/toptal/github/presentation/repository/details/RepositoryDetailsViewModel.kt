@@ -49,7 +49,7 @@ class RepositoryDetailsViewModel @Inject constructor(
                     _uiState.update { it.copy(repositoryDetails = item.toUi(), contentState = ContentState.Success) }
                 }
                 .onFailure { error ->
-                    _uiState.update { it.copy(contentState = ContentState.Error(error.message ?: "Unknown error")) }
+                    _uiState.update { it.copy(contentState = ContentState.Error(error)) }
                 }
         }
     }

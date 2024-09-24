@@ -33,6 +33,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.toptal.design.ToptalTheme
+import com.toptal.domain.exception.DataError
+import com.toptal.domain.exception.DomainError
 
 @Composable
 fun RepositoryDetailsRoot(
@@ -120,7 +122,7 @@ private fun Content(
         SectionHeader(details)
 
         Spacer(Modifier.height(16.dp))
-        
+
         val scrollState = rememberScrollState()
         Column(
             modifier = Modifier
@@ -240,12 +242,19 @@ private fun Error(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            Text(text = model.message)
-
+            Text(text = model.cause.asText())
+            Spacer(Modifier.height(16.dp))
             Button(onClick = onRetryClicked) {
                 Text(text = "Retry")
             }
         }
+    }
+}
+
+private fun DomainError.asText(): String {
+    return when (this) {
+        DataError.Network.NO_INTERNET -> "No Internet connection"
+        else -> "Unknown error!"
     }
 }
 
@@ -268,7 +277,7 @@ private fun RepositoryDetailsErrorPreview() {
         RepositoryDetailsRoot(
             state = RepositoryDetailsContract.State(
                 UiRepositoryDetails.EMPTY.copy(title = "Fixture Repository Name"),
-                contentState = ContentState.Error(message = "Fixture error message"),
+                contentState = ContentState.Error(cause = DataError.Network.NO_INTERNET),
             ),
             onBackClicked = { },
             onRetryClicked = { },
