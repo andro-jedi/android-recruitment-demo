@@ -4,7 +4,6 @@ import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.cache.normalized.api.MemoryCacheFactory
 import com.apollographql.apollo.cache.normalized.normalizedCache
 import com.apollographql.apollo.network.okHttpClient
-import com.toptal.data.di.ApolloGraphQlApi
 import com.toptal.data.di.NetworkingModule
 import com.toptal.data.networking.GithubApi
 import com.toptal.data.networking.GithubConfig

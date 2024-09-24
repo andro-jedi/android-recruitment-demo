@@ -1,5 +1,6 @@
 package com.toptal.data.di
 
+import com.toptal.data.ApolloGraphQlApi
 import com.toptal.data.networking.GithubApi
 import dagger.Binds
 import dagger.Module

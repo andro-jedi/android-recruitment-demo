@@ -1,4 +1,4 @@
-package com.toptal.data.di
+package com.toptal.data
 
 import com.apollographql.apollo.ApolloClient
 import com.toptal.data.networking.ApiRepositoryDetails
