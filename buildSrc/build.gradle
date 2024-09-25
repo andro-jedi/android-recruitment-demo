@@ -10,10 +10,6 @@ samWithReceiver {
     annotation("org.gradle.api.HasImplicitReceiver")
 }
 
-kotlin {
-    jvmToolchain(libs.versions.build.java.compile.get().toInteger())
-}
-
 dependencies {
     implementation(ProjectExtensionsKt.gradleKotlinDsl(project))
     implementation(libs.kotlin.gradle)
