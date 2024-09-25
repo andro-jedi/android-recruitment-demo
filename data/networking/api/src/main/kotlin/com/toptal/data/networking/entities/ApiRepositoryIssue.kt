@@ -1,4 +1,4 @@
-package com.toptal.data.networking
+package com.toptal.data.networking.entities
 
 data class ApiRepositoryIssue(
     val id: String,

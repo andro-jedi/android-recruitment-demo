@@ -18,6 +18,8 @@ android {
 
 dependencies {
     api(projects.data.networking.api)
+    implementation(projects.domain)
+
     implementation(libs.coroutines.core)
     implementation(libs.bundles.apollo)
     implementation(libs.okhttp.okhttp)

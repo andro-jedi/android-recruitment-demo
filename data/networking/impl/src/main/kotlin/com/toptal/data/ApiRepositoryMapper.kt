@@ -1,9 +1,9 @@
-package com.toptal.mappers
+package com.toptal.data
 
-import com.toptal.data.networking.ApiRepositoryDetails
-import com.toptal.data.networking.ApiRepositoryIssue
-import com.toptal.data.networking.ApiRepositoryItem
-import com.toptal.data.networking.ApiRepositoryPr
+import com.toptal.data.networking.entities.ApiRepositoryDetails
+import com.toptal.data.networking.entities.ApiRepositoryIssue
+import com.toptal.data.networking.entities.ApiRepositoryItem
+import com.toptal.data.networking.entities.ApiRepositoryPr
 import com.toptal.domain.entities.details.IssueState
 import com.toptal.domain.entities.details.PrState
 import com.toptal.domain.entities.details.RepositoryDetails

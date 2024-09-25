@@ -1,4 +1,4 @@
-package com.toptal.mappers
+package com.toptal.core.common
 
 import com.toptal.domain.exception.DataError
 import com.toptal.domain.exception.DomainError

@@ -2,7 +2,6 @@ package com.toptal.core.common
 
 import com.toptal.domain.exception.ExceptionMapper
 import com.toptal.domain.helper.Result
-import com.toptal.mappers.DefaultExceptionMapper
 import kotlin.coroutines.cancellation.CancellationException
 
 /**

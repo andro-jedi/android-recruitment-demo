@@ -1,5 +1,8 @@
 package com.toptal.data.networking
 
+import com.toptal.data.networking.entities.ApiRepositoryDetails
+import com.toptal.data.networking.entities.ApiRepositoryItem
+
 interface GithubApi {
 
     suspend fun getRepositoryDetails(
