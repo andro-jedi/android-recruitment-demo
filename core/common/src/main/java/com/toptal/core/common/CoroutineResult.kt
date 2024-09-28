@@ -8,7 +8,7 @@ import kotlin.coroutines.cancellation.CancellationException
  * Helper extension function for simplifying result handling
  */
 inline fun <R> resultOf(
-    exceptionMapper: ExceptionMapper = DefaultExceptionMapper(),
+    exceptionMapper: ExceptionMapper = GeneralExceptionMapper(),
     block: () -> R
 ): Result<R> {
     return try {

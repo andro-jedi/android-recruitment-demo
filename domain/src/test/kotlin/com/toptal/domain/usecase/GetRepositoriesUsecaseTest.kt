@@ -1,7 +1,7 @@
 package com.toptal.domain.usecase
 
 import com.toptal.domain.entities.list.RepositoryItem
-import com.toptal.domain.exception.DataError
+import com.toptal.domain.exception.GeneralError
 import com.toptal.domain.helper.Result
 import com.toptal.domain.repository.GitRepository
 import io.mockk.coEvery
@@ -47,7 +47,7 @@ class GetRepositoriesUsecaseTest {
     fun `invoke should return error on failure`() = runTest {
         // Arrange
         val user = "toptal"
-        val error = DataError.Network.NOT_FOUND
+        val error = GeneralError.Network.NoConnection
         coEvery { gitRepository.getRepositories(user) } returns Result.Failure(error)
 
         // Act

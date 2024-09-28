@@ -29,7 +29,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.toptal.design.ToptalTheme
-import com.toptal.domain.exception.DataError
+import com.toptal.domain.exception.GeneralError
 import com.toptal.domain.exception.DomainError
 import com.toptal.github.presentation.navigation.Navigation
 
@@ -151,8 +151,9 @@ private fun Error(
 
 private fun DomainError.asText(): String {
     return when (this) {
-        DataError.Network.NO_INTERNET -> "No Internet connection"
-        else -> "Unknown error!"
+        GeneralError.Network.NoConnection -> "No Internet connection"
+        is GeneralError.Unknown -> message ?: "Unknown error"
+        else -> "Unknown error"
     }
 }
 
