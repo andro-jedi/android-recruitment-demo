@@ -4,6 +4,9 @@ plugins {
 }
 
 dependencies {
+    implementation(projects.data.database.api)
+    implementation(projects.data.database.impl)
+
     implementation(projects.data.networking.api)
     implementation(projects.data.networking.impl)
     implementation(projects.domain)

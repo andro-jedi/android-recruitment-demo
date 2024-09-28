@@ -1,0 +1,28 @@
+plugins {
+    id("com.toptal.library.android")
+    alias(libs.plugins.google.ksp)
+}
+
+android {
+    defaultConfig {
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+}
+
+dependencies {
+    implementation(projects.data.database.api)
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    ksp(libs.room.ksp)
+
+    implementation(libs.coroutines.core)
+
+    implementation(libs.hilt.core)
+    ksp(libs.hilt.compiler)
+
+    androidTestImplementation(libs.espresso.core)
+    androidTestImplementation(libs.androidx.tests)
+    androidTestImplementation(libs.coroutines.test)
+    androidTestImplementation(libs.junit4.core)
+    androidTestImplementation(libs.assertj.core)
+}
