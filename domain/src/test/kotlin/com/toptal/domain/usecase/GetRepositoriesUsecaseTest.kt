@@ -7,6 +7,8 @@ import com.toptal.domain.repository.GitRepository
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -32,10 +34,10 @@ class GetRepositoriesUsecaseTest {
             RepositoryItem(id = "1", title = "repo1", url = "https://github.com/toptal/repo1"),
             RepositoryItem(id = "2", title = "repo2", url = "https://github.com/toptal/repo2"),
         )
-        coEvery { gitRepository.getRepositories(user) } returns Result.Success(repositories)
+        coEvery { gitRepository.getRepositories(user) } returns flowOf(Result.Success(repositories))
 
         // Act
-        val result = getRepositoriesUsecase(user)
+        val result = getRepositoriesUsecase(user).first()
 
         // Assert
         assertTrue(result.isSuccess)
@@ -48,10 +50,10 @@ class GetRepositoriesUsecaseTest {
         // Arrange
         val user = "toptal"
         val error = GeneralError.Network.NoConnection
-        coEvery { gitRepository.getRepositories(user) } returns Result.Failure(error)
+        coEvery { gitRepository.getRepositories(user) } returns flowOf(Result.Failure(error))
 
         // Act
-        val result = getRepositoriesUsecase(user)
+        val result = getRepositoriesUsecase(user).first()
 
         // Assert
         assertTrue(result.isFailure)
