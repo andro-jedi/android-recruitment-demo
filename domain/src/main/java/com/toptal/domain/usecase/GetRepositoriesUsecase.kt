@@ -3,16 +3,17 @@ package com.toptal.domain.usecase
 import com.toptal.domain.entities.list.RepositoryItem
 import com.toptal.domain.helper.Result
 import com.toptal.domain.repository.GitRepository
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 /**
  * Usecase for getting list of repositories
  */
 class GetRepositoriesUsecase @Inject constructor(
-    private val gitRepository: GitRepository
+    private val gitRepository: GitRepository,
 ) {
 
-    suspend operator fun invoke(user: String = "toptal"): Result<List<RepositoryItem>> {
+    operator fun invoke(user: String = "toptal"): Flow<Result<List<RepositoryItem>>> {
         return gitRepository.getRepositories(user)
     }
 }

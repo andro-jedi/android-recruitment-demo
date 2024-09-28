@@ -3,6 +3,7 @@ package com.toptal.domain.repository
 import com.toptal.domain.entities.details.RepositoryDetails
 import com.toptal.domain.entities.list.RepositoryItem
 import com.toptal.domain.helper.Result
+import kotlinx.coroutines.flow.Flow
 
 /**
  * Interface for Git repository
@@ -14,7 +15,7 @@ interface GitRepository {
      *
      * @param user user name
      */
-    suspend fun getRepositories(user: String) : Result<List<RepositoryItem>>
+    fun getRepositories(user: String) : Flow<Result<List<RepositoryItem>>>
 
     /**
      * Get details of repository
