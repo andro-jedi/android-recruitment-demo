@@ -15,7 +15,14 @@ interface GitRepository {
      *
      * @param user user name
      */
-    fun getRepositories(user: String) : Flow<Result<List<RepositoryItem>>>
+    fun getRepositories(user: String): Flow<Result<List<RepositoryItem>>>
+
+    /**
+     * Fetch list of repositories from API and save them to local database
+     *
+     * @param user user name
+     */
+    suspend fun fetchRepositories(user: String): Result<List<RepositoryItem>>
 
     /**
      * Get details of repository
@@ -23,5 +30,5 @@ interface GitRepository {
      * @param owner owner of the repository
      * @param name name of the repository
      */
-    suspend fun getRepositoryDetails(owner: String, name: String) : Result<RepositoryDetails>
+    suspend fun getRepositoryDetails(owner: String, name: String): Result<RepositoryDetails>
 }

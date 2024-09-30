@@ -3,11 +3,14 @@ package com.toptal.github.presentation.repository.list
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -29,8 +32,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.toptal.design.ToptalTheme
-import com.toptal.domain.exception.GeneralError
 import com.toptal.domain.exception.DomainError
+import com.toptal.domain.exception.GeneralError
 import com.toptal.github.presentation.navigation.Navigation
 
 @Composable
@@ -75,7 +78,19 @@ private fun RepositoriesListRoot(
         modifier = modifier,
         topBar = {
             TopAppBar(
-                title = { Text(text = "Repositories") },
+                title = {
+                    Row(Modifier.fillMaxSize(), verticalAlignment = Alignment.CenterVertically) {
+                        Text(
+                            text = "Repositories",
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .weight(1f),
+                        )
+                        if (state.contentState is ContentState.Progress) {
+                            Progress(Modifier.fillMaxHeight().padding(8.dp))
+                        }
+                    }
+                },
             )
         },
         contentWindowInsets = WindowInsets.systemBars,
@@ -86,8 +101,7 @@ private fun RepositoriesListRoot(
                 onRetryClicked = onRetryClicked,
             )
 
-            ContentState.Progress -> Progress()
-            ContentState.Success -> {
+            else -> {
                 LazyColumn(
                     modifier = Modifier.consumeWindowInsets(innerPadding),
                     contentPadding = innerPadding,
@@ -160,9 +174,7 @@ private fun DomainError.asText(): String {
 @Composable
 private fun Progress(modifier: Modifier = Modifier) {
     Box(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(8.dp),
+        modifier = modifier,
         contentAlignment = Alignment.Center,
     ) {
         CircularProgressIndicator()

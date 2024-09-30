@@ -3,9 +3,9 @@ package com.toptal.github.presentation.repository.list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.toptal.core.common.DispatchersProvider
-import com.toptal.domain.entities.list.RepositoryItem
 import com.toptal.domain.exception.DomainError
 import com.toptal.domain.exception.GeneralError
+import com.toptal.domain.usecase.FetchRepositoriesUsecase
 import com.toptal.domain.usecase.GetRepositoriesUsecase
 import com.toptal.github.presentation.repository.toUi
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,16 +16,15 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.plus
 import javax.inject.Inject
 
 @HiltViewModel
 class RepositoriesListViewModel @Inject constructor(
     private val getRepositoriesUsecase: GetRepositoriesUsecase,
+    private val fetchRepositoriesUsecase: FetchRepositoriesUsecase,
     private val dispatcherProvider: DispatchersProvider,
 ) : ViewModel() {
 
@@ -40,26 +39,34 @@ class RepositoriesListViewModel @Inject constructor(
     }
 
     private fun getRepositories() {
-        fun onSuccess(items: List<RepositoryItem>) {
-            _uiState.update {
-                it.copy(
-                    items = items.map { it.toUi() },
-                    contentState = ContentState.Success,
-                )
-            }
-        }
+        viewModelScope.launch(dispatcherProvider.io) {
+            _uiState.update { it.copy(contentState = ContentState.Progress) }
 
-        getRepositoriesUsecase()
-            .onStart {
-                _uiState.update { it.copy(contentState = ContentState.Progress) }
-            }
-            .onEach { result ->
-                result
-                    .onSuccess { onSuccess(it) }
+            launch {
+                fetchRepositoriesUsecase()
+                    .onSuccess { items ->
+                        _uiState.update {
+                            it.copy(
+                                items = items.map { it.toUi() },
+                                contentState = ContentState.Success,
+                            )
+                        }
+                    }
+                    // TODO refactor error handling, cache is not working properly when error occur during fetch
                     .onFailure { onError(it) }
             }
-            .catch { onError(GeneralError.Unknown(it.message)) }
-            .launchIn(viewModelScope + dispatcherProvider.io)
+
+            getRepositoriesUsecase()
+                .onEach { result ->
+                    result
+                        .onSuccess { items ->
+                            _uiState.update { it.copy(items = items.map { it.toUi() }) }
+                        }
+                        .onFailure { onError(it) }
+                }
+                .catch { onError(GeneralError.Unknown(it.message)) }
+                .launchIn(this)
+        }
     }
 
     private fun onError(error: DomainError) {
